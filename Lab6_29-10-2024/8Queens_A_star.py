@@ -1,5 +1,5 @@
 import heapq
-
+import numpy as np
 # Define the state as the current board configuration
 class State:
     def __init__(self, queens):
@@ -54,6 +54,12 @@ def a_star_search():
 # Run the algorithm
 solution = a_star_search()
 if solution:
+    a = [["-"] * 8 for i in range(8)]
+    for r in range(8):
+        for c in range(8):
+            if c == solution[r]:
+                a[r][c] = solution[r]
+    print(np.array(a))
     print("Solution found:", solution)
 else:
     print("No solution found")
