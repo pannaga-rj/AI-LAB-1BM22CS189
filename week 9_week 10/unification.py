@@ -70,7 +70,7 @@ def parse_input(input_str):
 
 def main():
     while True:
-        print("Output: 1BM22CS200")
+        print("Output: 1BM22CS189")
         expr1_input = input("Enter the first expression (e.g., p(x, f(y))): ")
         expr2_input = input("Enter the second expression (e.g., p(a, f(z))): ")
         expr1 = parse_input(expr1_input)
