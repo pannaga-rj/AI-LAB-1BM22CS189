@@ -1,40 +1,69 @@
 #LAb 7 PL entailments
+import itertools
 
-from sympy.logic.boolalg import Or, And, Not
-from sympy.abc import A, B, C, D, E, F
-from sympy import simplify_logic
+# Function to evaluate an expression
+def evaluate_expression(a, b, c, expression):
+    # Use eval() to evaluate the logical expression
+    return eval(expression)
 
-def is_entailment(kb, query):
-    # Negate the query
-    negated_query = Not(query)
-    # Add negated query to the knowledge base
-    kb_with_negated_query = And(*kb, negated_query)
-   
-    # Simplify the combined KB to CNF
-    simplified_kb = simplify_logic(kb_with_negated_query, form="cnf")
-   
-    # If the simplified KB evaluates to False, the query is entailed
-    return simplified_kb == False
+# Function to generate the truth table and evaluate a logical expression
+def truth_table_and_evaluation(kb, query):
+    # All possible combinations of truth values for a, b, and c
+    truth_values = [True, False]
+    combinations = list(itertools.product(truth_values, repeat=3))
+    # Reverse the combinations to start from the bottom (False -> True)
+    combinations.reverse()
 
+    # Header for the full truth table
+    print(f"{'a':<5}   {'b':<5} {'c':<5} {'KB':<20}{'Query':<20}")
 
+    # Evaluate the expressions for each combination
+    for combination in combinations:
+        a, b, c = combination
 
+        # Evaluate the knowledge base (KB) and query expressions
+        kb_result = evaluate_expression(a, b, c, kb)
+        query_result = evaluate_expression(a, b, c, query)
 
-# Define a larger Knowledge Base
-kb = [
-    Or(A, B),         # A ∨ B
-    Or(Not(A), C),    # ¬A ∨ C
-    Or(Not(B), D),    # ¬B ∨ D
-    Or(Not(D), E),    # ¬D ∨ E
-    Or(Not(E), F),    # ¬E ∨ F
-    F                 # F
-]
-# Query to check
-query = Or(C, F)  # C ∨ F
+        # Replace True/False with string "True"/"False"
+        kb_result_str = "True" if kb_result else "False"
+        query_result_str = "True" if query_result else "False"
 
+        # Convert boolean values of a, b, c to "True"/"False"
+        a_str = "True" if a else "False"
+        b_str = "True" if b else "False"
+        c_str = "True" if c else "False"
 
-# Check entailment
-result = is_entailment(kb, query)
-print(f"Is the query '{query}' entailed by the knowledge base? {'Yes' if result else 'No'}")
+        # Print the results for the knowledge base and the query
+        print(f"{a_str:<5} {b_str:<5} {c_str:<5} {kb_result_str:<20} {query_result_str:<20}")
+
+    # Additional output for combinations where both KB and query are true
+    print("\nCombinations where both KB and Query are True:")
+    print(f"{'a':<5}   {'b':<5} {'c':<5} {'KB':<20}{'Query':<20}")
+
+    # Print only the rows where both KB and Query are True
+    for combination in combinations:
+        a, b, c = combination
+
+        # Evaluate the knowledge base (KB) and query expressions
+        kb_result = evaluate_expression(a, b, c, kb)
+        query_result = evaluate_expression(a, b, c, query)
+
+        # If both KB and query are True, print the combination
+        if kb_result and query_result:
+            a_str = "True" if a else "False"
+            b_str = "True" if b else "False"
+            c_str = "True" if c else "False"
+            kb_result_str = "True" if kb_result else "False"
+            query_result_str = "True" if query_result else "False"
+            print(f"{a_str:<5} {b_str:<5} {c_str:<5} {kb_result_str:<20} {query_result_str:<20}")
+
+# Define the logical expressions as strings
+kb = "(a or c) and (b or not c)"  # Knowledge Base
+query = "a or b"  # Query to evaluate
+
+# Generate the truth table and evaluate the knowledge base and query
+truth_table_and_evaluation(kb, query)
 
 
 
