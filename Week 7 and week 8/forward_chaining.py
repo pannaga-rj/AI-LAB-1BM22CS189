@@ -48,7 +48,7 @@ def forward_chaining(facts, rules):
 
 # Run forward chaining
 final_facts = forward_chaining(facts, rules)
-print("Output: 1BM22CS200")
+print("Output: 1BM22CS189")
 print("\nFinal derived facts:")
 for fact in final_facts:
     print(fact)
