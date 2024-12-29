@@ -102,7 +102,7 @@ query = "writesBooks(Socrates)"
 result = resolve(query)
 
 # Print the result
-print("Output: 1BM22CS200")
+print("Output: 1BM22CS189")
 print(f"Does Socrates write books? {'Yes' if result else 'No'}")
 
 
